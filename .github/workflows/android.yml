@@ -23,13 +23,12 @@ jobs:
     - name: Setup Android NDK
       uses: android-actions/setup-android@v3
       with:
-        ndk-version: '25.2.9519653' # A stable, widely used NDK version
+        ndk-version: '27.0.12077973'
 
     - name: Configure SDK and NDK paths
       run: |
         echo "sdk.dir=$ANDROID_HOME" > local.properties
-        REAL_NDK_PATH=$(ls -d $ANDROID_HOME/ndk/* | head -n 1)
-        echo "ndk.dir=$REAL_NDK_PATH" >> local.properties
+        echo "ndk.dir=$ANDROID_HOME/ndk/27.0.12077973" >> local.properties
           
         echo "--- Generated local.properties ---"
         cat local.properties
