@@ -25,11 +25,13 @@ jobs:
       with:
         ndk-version: '25.2.9519653' # A stable, widely used NDK version
 
-    # Dynamically maps SDK and NDK directories into local.properties for legacy Gradle
     - name: Configure SDK and NDK paths
       run: |
         echo "sdk.dir=$ANDROID_HOME" > local.properties
-        echo "ndk.dir=$ANDROID_HOME/ndk/25.2.9519653" >> local.properties
+        REAL_NDK_PATH=$(ls -d $ANDROID_HOME/ndk/* | head -n 1)
+        echo "ndk.dir=$REAL_NDK_PATH" >> local.properties
+          
+        echo "--- Generated local.properties ---"
         cat local.properties
 
     - name: Grant execute permission for gradlew
