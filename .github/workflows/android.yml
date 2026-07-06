@@ -20,10 +20,9 @@ jobs:
         distribution: 'temurin'
         cache: gradle
 
-    - name: Setup Android NDK
-      uses: android-actions/setup-android@v3
-      with:
-        ndk-version: '27.0.12077973'
+    - name: Install Android NDK via SDKManager
+      run: |
+        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;27.0.12077973"
 
     - name: Configure SDK and NDK paths
       run: |
