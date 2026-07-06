@@ -21,16 +21,13 @@ jobs:
         cache: gradle
 
     - name: Install Android NDK via SDKManager
-      run: |
-        echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;27.0.12077973"
+      run: echo "y" | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --install "ndk;27.0.12077973"
 
     - name: Configure SDK and NDK paths
-      run: |
-        echo "sdk.dir=$ANDROID_HOME" > local.properties
-        echo "ndk.dir=$ANDROID_HOME/ndk/27.0.12077973" >> local.properties
-          
-        echo "--- Generated local.properties ---"
-        cat local.properties
+      run: echo "sdk.dir=$ANDROID_HOME" > local.properties; echo "ndk.dir=$ANDROID_HOME/ndk/27.0.12077973" >> local.properties
+
+    - name: Patch Windows ndk-build references for Linux Runner
+      run: find . -name "build.gradle" -exec sed -i 's/ndk-build.cmd/ndk-build/g' {} +
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
